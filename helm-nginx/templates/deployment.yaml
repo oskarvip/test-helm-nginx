@@ -1,0 +1,33 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: {{ .Values.image.app }}
+    tag: {{ .Values.image.tag }}
+  name: {{ .Values.image.app }}-{{ .Values.image.tag }}
+  namespace: {{ .Values.namespace.name }}
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: {{ .Values.image.app }}
+      tag: {{ .Values.image.tag }}
+  strategy:
+    rollingUpdate:
+      maxSurge: 25%
+      maxUnavailable: 25%
+    type: RollingUpdate
+  template:
+    metadata:
+      labels:
+        app: {{ .Values.image.app }}
+        tag: {{ .Values.image.tag }}
+    spec:
+      containers:
+      - image: {{ .Values.image.app }}:{{ .Values.image.tag }}
+        imagePullPolicy: IfNotPresent
+        name: {{ .Values.image.app }}-{{ .Values.image.tag }}
+        resources:
+           requests:
+              cpu: {{ .Values.resources.cpu }}
+              memory: {{ .Values.resources.memory }}
