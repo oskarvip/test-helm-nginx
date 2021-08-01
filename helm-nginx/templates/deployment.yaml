@@ -4,7 +4,7 @@ metadata:
   labels:
     app: {{ .Values.image.app }}
     tag: {{ .Values.image.tag }}
-  name: {{ .Values.image.app }}-{{ .Values.image.tag }}
+  name: {{ .Values.image.app }}
   namespace: {{ .Values.namespace.name }}
 spec:
   replicas: 3
@@ -26,7 +26,7 @@ spec:
       containers:
       - image: {{ .Values.image.app }}:{{ .Values.image.tag }}
         imagePullPolicy: IfNotPresent
-        name: {{ .Values.image.app }}-{{ .Values.image.tag }}
+        name: {{ .Values.image.app }}
         resources:
            requests:
               cpu: {{ .Values.resources.cpu }}
